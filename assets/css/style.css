@@ -1,0 +1,52 @@
+nav{
+    background-color:darkslategrey;
+    height:100vh;
+    padding-top:15vh;
+}
+
+a{
+    color:white;
+    text-align:center;
+}
+
+/*
+Styling for the view portion of the page
+*****************************************
+*****************************************
+*/
+#viewpage{
+    display:inline-block;
+    overflow-y:auto;
+}
+h5{
+    margin-top:1vh;
+    padding-bottom:1vh;
+    float:left;
+}
+p{
+    margin-top:1vh;
+}
+.card{
+    margin-top:2vh;
+    height:26vh;
+}
+
+.carddeck{
+    height:100vh;
+}
+
+#addpage{
+    visibility:none;
+}
+
+#updatepage{
+    display:none;
+}
+
+#deletepage{
+    display:none;
+}
+
+#searchpage{
+    display:none;
+}
