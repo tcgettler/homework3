@@ -16,7 +16,7 @@
   <div class="row">
     <div class="container col-md-2 align-content-left">
       <nav class="nav flex-column">
-        <a class="nav-link active" href="#" id="view">View</a>
+        <a class="nav-link disabled" href="#" id="view">View</a>
         <a class="nav-link" href="#" id="add">Add</a>
         <a class="nav-link" href="#" id="search">Search</a>
         <a class="nav-link" href="#" id="update">Update</a>
@@ -63,7 +63,22 @@
 
     <!--Create the form to display when add is selected-->
     <div class="container col-md-10" id="addpage">
-      
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Last name">
+            </div>
+          </div>
+          <div class="row">
+              <input type="text" class="form-control" placeholder="Office number">
+          </div>
+          <div class="row">
+              <input type="text" class="form-control" placeholder="Phone number">
+          </div>
+        </form>
     </div>
 
     <!--Create a bar to search for an entry-->

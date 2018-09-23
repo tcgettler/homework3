@@ -44,9 +44,9 @@ const $ = function (selector) {
   }
 
   //adds html elements to the end of the nodeList.
-  const append = function(content){
+  const append = function(content,key){;
     for (let i = 0; i < nodeList.length; i++) {
-      nodeList[i].innerHTML += content;
+      nodeList[i].innerHTML += content[i][key];
     }
   }
 
@@ -65,11 +65,14 @@ const $ = function (selector) {
         nodeList[0].value = content;
       }     
   }
-  const duplicate = function(){
-    const sourceElement = document.querySelector('.card');
+
+
+  const duplicate = function(index){
+    const card = document.querySelector('.card');
+
     const destination = document.querySelector('.carddeck');
 
-    const copy = sourceElement.cloneNode(true);
+    const copy = card.cloneNode(true);
     destination.appendChild(copy);
   };
 
