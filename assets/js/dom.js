@@ -69,7 +69,6 @@ const $ = function (selector) {
 
   const duplicate = function(index){
     const card = document.querySelector('.card');
-
     const destination = document.querySelector('.carddeck');
 
     const copy = card.cloneNode(true);

@@ -8,7 +8,18 @@ a{
     color:white;
     text-align:center;
 }
+a:hover{
+    font-weight:bold;
+    color:black;
+}
+.active{
+    background-color:white;
+    color:darkgray;
+}
 
+.disabled{
+    text-decoration:none;
+}
 /*
 Styling for the view portion of the page
 *****************************************
@@ -34,9 +45,33 @@ p{
 .carddeck{
     height:100vh;
 }
-
+/*
+Styling for the add contact form
+********************************
+********************************
+*/
 #addpage{
-    visibility:none;
+    z-index: 2;
+    height: 55vh;
+    background-color: white;
+    border-style: solid;
+    border-color: gray;
+    border-width: .10em;
+    position: absolute;
+    top: 16vh;
+    left: 15.5vw;
+    border-radius: 15px;
+    padding-top:1%;
+}
+input{
+    margin:2%;
+}
+.form-control{
+    margin:0;
+    margin-top:5%;
+}
+.form-group{
+    margin-top: 2rem;
 }
 
 #updatepage{

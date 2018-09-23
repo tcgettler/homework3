@@ -16,7 +16,7 @@
   <div class="row">
     <div class="container col-md-2 align-content-left">
       <nav class="nav flex-column">
-        <a class="nav-link disabled" href="#" id="view">View</a>
+        <a class="nav-link active" href="#" id="view">View</a>
         <a class="nav-link" href="#" id="add">Add</a>
         <a class="nav-link" href="#" id="search">Search</a>
         <a class="nav-link" href="#" id="update">Update</a>
@@ -62,21 +62,32 @@
     </div>
 
     <!--Create the form to display when add is selected-->
-    <div class="container col-md-10" id="addpage">
-        <form>
+    <div class="container col-md-5 invisible" id="addpage">
+        <form id="addform">
           <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="First name">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="First name" id="firstname">
             </div>
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Last name">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Last name" id="lastname">
             </div>
           </div>
           <div class="row">
-              <input type="text" class="form-control" placeholder="Office number">
+            <div class="col-md-12">
+              <input type="text" class="form-control" placeholder="Office number" id="officenumber">
+            </div>
           </div>
           <div class="row">
-              <input type="text" class="form-control" placeholder="Phone number">
+            <div class="col-md-12">
+              <input type="text" class="form-control" placeholder="Phone number" id="phonenumber">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary" id="addcontact">Add</button>
+              <button type="submit" class="btn btn-primary" id="resetcontact">Reset</button>
+              <button type="submit" class="btn btn-primary" id="cancelcontact">Cancel</button>
+            </div>
           </div>
         </form>
     </div>
