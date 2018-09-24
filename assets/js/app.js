@@ -5,7 +5,6 @@ Render view list upon page load
 */
 window.addEventListener('load',function(event){
     $().card();
-    console.log($().card());
     for (i=1; i < employeeList.length; i++){
         $().duplicate();
     };
@@ -106,7 +105,6 @@ document.getElementById('search').addEventListener('click', function(event){
 document.getElementById('searchbutton').addEventListener('click', function(event){
     const searchvalue = $(".custom-select").val();
     const searchcriteria = $("#searchbar").val();
-    const card = document.getElementsByClassName('clone');
     const index = [];
     for (i=0; i<employeeList.length; i++){
         if (searchvalue === "officeNum"){
@@ -133,3 +131,44 @@ document.getElementById('searchbutton').addEventListener('click', function(event
 });
 
 /***************************************************End of Search Tab ******************************************************************************/
+
+/****************************************************Start of Update Tab ***************************************************************************/
+//Initial actions when clicking the delete tab to show the form.
+document.getElementById('update').addEventListener('click', function(event){
+    const update = document.getElementById('update');
+    $().menuchange();
+    update.classList.add('active');
+    $('viewpage').empty();
+    $().card();
+    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id=firstname>`);
+    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id=lastname>`);
+    $('#officeNum').html(`<input type="text" class="form-control inputstyle" placeholder="Office Number" id=officenumber>`);
+    $('#phoneNum').html(`<input type="text" class="form-control inputstyle" placeholder="Phone Number" id=phonenumber>`);
+    $('#updatepage').html(`<div class="col-sm-10 buttongroup"> <button type="submit" class="btn btn-primary " id="updatecontact">Update</button> <button type="submit" class="btn btn-primary" id="resetcontact">Reset</button> </div>`);
+});
+
+/****************************************************End of Update Tab *****************************************************************************/
+
+/****************************************************Start of Delete Tab ***************************************************************************/
+//initial actions when clicking the delete tab to show the form.
+document.getElementById('delete').addEventListener('click', function(event){
+    const deletetab = document.getElementById('delete');
+    $().menuchange();
+    deletetab.classList.add('active');
+    $('viewpage').empty();
+    $().card();
+    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id=firstname>`);
+    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id=lastname>`);
+    $('#officeNum').html(`<input type="text" class="form-control inputstyle" placeholder="Office Number" id=officenumber>`);
+    $('#phoneNum').html(`<input type="text" class="form-control inputstyle" placeholder="Phone Number" id=phonenumber>`);
+    $('#deletepage').html(`<div class="col-sm-10 buttongroup"> <button type="submit" class="btn btn-primary " id="deletecontact">Delete</button> <button type="submit" class="btn btn-primary" id="reset">Reset</button> </div>`);
+});
+
+/*Reset the form when clicking reset*/
+document.getElementById('deletepage').addEventListener('click', function(event){
+    let reset = event.target.getAttribute('id');
+    console.log(reset);
+    if (reset.getElementById === "reset"){
+        $('#deletepage').empty();
+    }
+});

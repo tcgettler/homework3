@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css" >
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
@@ -15,7 +15,7 @@
 
   <!--Create the nav bar-->
   <div class="row">
-    <div class="container col-md-2 align-content-left">
+    <div class="col-md-2 align-content-left float-left">
       <nav class="nav flex-column">
         <a class="nav-link active" href="#" id="view">View</a>
         <a class="nav-link" href="#" id="add">Add</a>
@@ -25,29 +25,28 @@
       </nav>
     </div>
 
-    <div class="container col-md-8 d-none" id="searchpage">
-        <div class="form-inline">
-          <select class="custom-select col-3">
-            <option selected value="fName">First Name</option>
-            <option value="lName">Last Name</option>
-            <option value="officeNum">Office Number</option>
-            <option value="phoneNum">Phone Number</option>
-          </select>
-          <input class="form-control col-6" type="text" placeholder="Search" id="searchbar">
-          <button type="button" class="btn btn-secondary col-1" id="searchbutton"><i class="fas fa-search"></i></button>
-        </div>
-    </div>
+    
     
     <!--Create the html template of the entries to be displayed-->
-    <div class="container col-md-10 carddeck" id="viewpage">
+    <div class="col-md-10 carddeck" id="viewpage">
       <!--Create a bar to search for an entry-->
-      
-        
+      <div class="col-md-8 d-none" id="searchpage">
+          <div class="form-inline">
+            <select class="custom-select col-3">
+              <option selected value="fName">First Name</option>
+              <option value="lName">Last Name</option>
+              <option value="officeNum">Office Number</option>
+              <option value="phoneNum">Phone Number</option>
+            </select>
+            <input class="form-control col-6" type="text" placeholder="Search" id="searchbar">
+            <button type="button" class="btn btn-secondary col-1" id="searchbutton"><i class="fas fa-search"></i></button>
+          </div>
       </div>
     </div>
+  </div>
 
     <!--Create the form to display when add is selected-->
-    <div class="container col-md-5 invisible" id="addpage">
+    <div class="col-md-5 invisible" id="addpage">
         <form id="addform">
           <div class="row">
             <div class="col-md-6">
@@ -78,14 +77,15 @@
     </div>
 
     <!--Create an update form-->
-    <div class="container col-md-10" id="updatepage">
+    <div class="col-md-10" id="updatepage">
 
     </div>
+
     <!--Create a delete form-->
-    <div class="container col-md-10" id="deletepage">
-
-    </div>
-  </div>
+      <div class="col-md-10" id="deletepage">
+  
+      </div>
+  
   <script src="./assets/js/dom.js"></script>
   <script src="./assets/js/employeeList.js"></script>
   <script src="./assets/js/app.js"></script>

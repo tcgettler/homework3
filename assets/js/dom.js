@@ -112,7 +112,7 @@ const $ = function (selector) {
                                                       </div>`);
   };
 
-
+//Reset all pages and tabs to allow clicked pages to become active
 const menuchange = function(){
   const searchtab = document.getElementById('search');
   const viewtab = document.getElementById('view');
@@ -125,10 +125,12 @@ const menuchange = function(){
   viewtab.classList.remove('active');
   addtab.classList.remove('active');
   updatetab.classList.remove('active');
-  deletetab.classList.remove('acitve');
+  deletetab.classList.remove('active');
   addpage.classList.add('invisible');
   searchbar.classList.remove('d-inline');
   searchbar.classList.add('d-none');
+  $('#deletepage').empty();
+  $('#updatepage').empty();
 };
 
   //Event listener function to run actions created on pages.
