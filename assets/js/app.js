@@ -4,8 +4,10 @@ Render view list upon page load
 *******************************
 */
 window.addEventListener('load',function(event){
+    $().card();
+    console.log($().card());
     for (i=1; i < employeeList.length; i++){
-        $().duplicate(i);
+        $().duplicate();
     };
         $('#fName').append(employeeList, 'fName');
         $('#lName').append(employeeList, 'lName');
@@ -19,35 +21,32 @@ Render the employeeList upon clicking view
 ******************************************
 */
 document.getElementById('view').addEventListener('click', function(event){
-    let view = document.getElementById('view');
-    if (view.className === 'nav-link active'){
-        return;
-    } else {
+    const view = document.getElementById('view');
+    $().menuchange();
+    view.classList.add('active');
+
+    $('viewpage').empty();
+    $().card();
         for (i=1; i < employeeList.length; i++){
-            $().duplicate(i);
+            $().duplicate();
         };
         $('#fName').append(employeeList, 'fName');
         $('#lName').append(employeeList, 'lName');
         $('#officeNum').append(employeeList, 'officeNum');
         $('#phoneNum').append(employeeList, 'phoneNum');
-    };
 });
+
+/****************************** Start of Add Tab ******************************************************************/
 
 /*Display add form when clicking button*/
 document.getElementById('add').addEventListener('click', function(event){
     const add = document.getElementById('addpage');
-    const view = document.getElementById('view');
-    const addtab = document.getElementById('add');
-    view.classList.remove('active');
-    addtab.classList.add('active');
+    const addmenu = document.getElementById('add');
+    $().menuchange();
     add.classList.remove('invisible');
+    addmenu.classList.add('active');
 });
 
-/*
-Add tab functionality
-*********************
-*********************
-*/
 /*Add user to employeeList form when clicking add.*/
 document.getElementById('addcontact').addEventListener('click', function(event){
     /*obtain elements to add and remove stylings */
@@ -91,3 +90,46 @@ document.getElementById('cancelcontact').addEventListener('click', function(even
     const add = document.getElementById('addpage');
     add.classList.add('invisible');
 });
+
+/****************************************end of add tab *****************************************************/
+
+/****************************************Start of search tab ************************************************/
+document.getElementById('search').addEventListener('click', function(event){
+    const search = document.getElementById('searchpage');
+    const clicked = document.getElementById('search');
+    $().menuchange();
+    search.classList.remove('d-none');
+    search.classList.add('d-inline');
+    clicked.classList.add('active');
+});
+
+document.getElementById('searchbutton').addEventListener('click', function(event){
+    const searchvalue = $(".custom-select").val();
+    const searchcriteria = $("#searchbar").val();
+    const card = document.getElementsByClassName('clone');
+    const index = [];
+    for (i=0; i<employeeList.length; i++){
+        if (searchvalue === "officeNum"){
+            if (Number(searchcriteria) === employeeList[i][searchvalue]){
+                index.push(employeeList[i]);
+            };
+        }else if (searchcriteria.toLowerCase() === employeeList[i][searchvalue].toLowerCase()){
+                index.push(employeeList[i]);
+        } else {
+            
+        };
+    };
+    if (index.length > 0){
+        $('viewpage').empty();
+        $().card();
+        for (let i = 1; i < index.length; i++){
+            $().duplicate();
+        };
+        $('#fName').append(index, 'fName');
+        $('#lName').append(index, 'lName');
+        $('#officeNum').append(index, 'officeNum');
+        $('#phoneNum').append(index, 'phoneNum');
+    };
+});
+
+/***************************************************End of Search Tab ******************************************************************************/

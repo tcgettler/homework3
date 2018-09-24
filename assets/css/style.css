@@ -15,10 +15,16 @@ a:hover{
 .active{
     background-color:white;
     color:darkgray;
+    pointer-events: none;
+    transition:1s;
 }
 
 .disabled{
     text-decoration:none;
+}
+
+.template{
+    display:none;
 }
 /*
 Styling for the view portion of the page
@@ -74,14 +80,22 @@ input{
     margin-top: 2rem;
 }
 
-#updatepage{
-    display:none;
+.btn-primary{
+    background-color:darkgray;
+    border-color:darkgray;
 }
 
+#updatepage{
+    
+}
+#searchbar{
+    margin:0%;
+}
 #deletepage{
     display:none;
 }
 
 #searchpage{
-    display:none;
+    margin-top: 1%;
+    margin-left: 4%;
 }

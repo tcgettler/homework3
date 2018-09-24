@@ -66,21 +66,77 @@ const $ = function (selector) {
       }     
   }
 
-
-  const duplicate = function(index){
+ //duplicate cards
+  const duplicate = function(){
     const card = document.querySelector('.card');
     const destination = document.querySelector('.carddeck');
 
     const copy = card.cloneNode(true);
+    copy.classList.add('clone')
     destination.appendChild(copy);
   };
+
+  //create a card for employee information to be displayed.
+  const card = function(){
+    document.getElementById("viewpage").innerHTML= (`<div class="card col-md-8">
+                                                      <div class="row">
+                                                        <div class="col-md-2">
+                                                          <h5>First Name:</h5>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                          <p id="fName"></p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                          <h5>Last Name:</h5>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                          <p id="lName"></p>
+                                                        </div>
+                                                      </div>
+                                                      <div class="row">
+                                                        <div class="col-md-2">
+                                                            <h5>Office:</h5>
+                                                          </div>
+                                                          <div class="col-md-10">
+                                                            <p id="officeNum"></p>
+                                                          </div>
+                                                      </div>
+                                                      <div class="row">
+                                                          <div class="col-md-2">
+                                                          <h5>Phone:<h5>
+                                                          </div>
+                                                          <div class="col-md-10">
+                                                            <p id="phoneNum"></p>
+                                                          </div>
+                                                      </div>
+                                                      </div>`);
+  };
+
+
+const menuchange = function(){
+  const searchtab = document.getElementById('search');
+  const viewtab = document.getElementById('view');
+  const addtab = document.getElementById('add');
+  const updatetab = document.getElementById('update');
+  const deletetab = document.getElementById('delete');
+  const addpage = document.getElementById('addpage');
+  const searchbar = document.getElementById('searchpage');
+  searchtab.classList.remove('active');
+  viewtab.classList.remove('active');
+  addtab.classList.remove('active');
+  updatetab.classList.remove('active');
+  deletetab.classList.remove('acitve');
+  addpage.classList.add('invisible');
+  searchbar.classList.remove('d-inline');
+  searchbar.classList.add('d-none');
+};
 
   //Event listener function to run actions created on pages.
   const on = function (action, cb) {
     for (let i = 0; i < nodeList.length; i++) {
       nodeList[i].addEventListener(action, cb);
     }
-  }
+  };
 
   return {
     text: text,
@@ -93,6 +149,8 @@ const $ = function (selector) {
     prepend: prepend,
     on: on,
     val: val,
-    duplicate: duplicate
+    duplicate: duplicate,
+    card: card,
+    menuchange: menuchange
   };
 }
