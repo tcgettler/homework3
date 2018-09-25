@@ -34,7 +34,6 @@ Styling for the view portion of the page
 */
 #viewpage{
     overflow-y: auto;
-    
 }
 h5{
     margin-top:1vh;
@@ -96,15 +95,19 @@ input{
 
 
 #searchpage{
-    margin-top: 1%;
+    margin-top: 2vh;
     margin-left: 4%;
 }
 
 .buttongroup{
-    margin-left: 32vh;
-    margin-top: -58vh;
+    
+    
 }
 
 .inputstyle{
     margin:0;
+}
+
+.mainpage{
+    padding-top:5vh;
 }

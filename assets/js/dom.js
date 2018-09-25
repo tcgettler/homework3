@@ -121,6 +121,8 @@ const menuchange = function(){
   const deletetab = document.getElementById('delete');
   const addpage = document.getElementById('addpage');
   const searchbar = document.getElementById('searchpage');
+  const updatepage = document.getElementById('updatepage');
+  const deletepage = document.getElementById('deletepage');
   searchtab.classList.remove('active');
   viewtab.classList.remove('active');
   addtab.classList.remove('active');
@@ -129,8 +131,10 @@ const menuchange = function(){
   addpage.classList.add('invisible');
   searchbar.classList.remove('d-inline');
   searchbar.classList.add('d-none');
-  $('#deletepage').empty();
-  $('#updatepage').empty();
+  updatepage.classList.remove('d-inline');
+  updatepage.classList.add('d-none');
+  deletepage.classList.remove('d-inline');
+  deletepage.classList.add('d-none');
 };
 
   //Event listener function to run actions created on pages.

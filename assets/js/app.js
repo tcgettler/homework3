@@ -136,15 +136,22 @@ document.getElementById('searchbutton').addEventListener('click', function(event
 //Initial actions when clicking the delete tab to show the form.
 document.getElementById('update').addEventListener('click', function(event){
     const update = document.getElementById('update');
+    const updatepage = document.getElementById('updatepage');
     $().menuchange();
     update.classList.add('active');
     $('viewpage').empty();
     $().card();
-    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id=firstname>`);
-    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id=lastname>`);
-    $('#officeNum').html(`<input type="text" class="form-control inputstyle" placeholder="Office Number" id=officenumber>`);
-    $('#phoneNum').html(`<input type="text" class="form-control inputstyle" placeholder="Phone Number" id=phonenumber>`);
-    $('#updatepage').html(`<div class="col-sm-10 buttongroup"> <button type="submit" class="btn btn-primary " id="updatecontact">Update</button> <button type="submit" class="btn btn-primary" id="resetcontact">Reset</button> </div>`);
+    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id="firstname">`);
+    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastname">`);
+    $('#officeNum').html(`<input type="text" class="form-control inputstyle" placeholder="Office Number" id="officenumber">`);
+    $('#phoneNum').html(`<input type="text" class="form-control inputstyle" placeholder="Phone Number" id="phonenumber">`);
+    updatepage.classList.remove('d-none');
+    updatepage.classList.add('d-inline');
+});
+
+document.getElementById('resetupdate').addEventListener('click', function(){
+
+
 });
 
 /****************************************************End of Update Tab *****************************************************************************/
@@ -153,22 +160,48 @@ document.getElementById('update').addEventListener('click', function(event){
 //initial actions when clicking the delete tab to show the form.
 document.getElementById('delete').addEventListener('click', function(event){
     const deletetab = document.getElementById('delete');
+    const deletepage = document.getElementById('deletepage');
     $().menuchange();
     deletetab.classList.add('active');
     $('viewpage').empty();
     $().card();
-    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id=firstname>`);
-    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id=lastname>`);
-    $('#officeNum').html(`<input type="text" class="form-control inputstyle" placeholder="Office Number" id=officenumber>`);
-    $('#phoneNum').html(`<input type="text" class="form-control inputstyle" placeholder="Phone Number" id=phonenumber>`);
-    $('#deletepage').html(`<div class="col-sm-10 buttongroup"> <button type="submit" class="btn btn-primary " id="deletecontact">Delete</button> <button type="submit" class="btn btn-primary" id="reset">Reset</button> </div>`);
+    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id="firstnamedel">`);
+    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastname2">`);
+    deletepage.classList.remove('d-none');
+    deletepage.classList.add('d-inline');
 });
 
 /*Reset the form when clicking reset*/
-document.getElementById('deletepage').addEventListener('click', function(event){
-    let reset = event.target.getAttribute('id');
-    console.log(reset);
-    if (reset.getElementById === "reset"){
-        $('#deletepage').empty();
-    }
+document.getElementById('resetdelete').addEventListener('click', function(event){
+    //Can't get input fields to reset, so I just delete the form and rebuild it.
+    $('viewpage').empty();
+    $().card();
+    $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" value = " " id="firstnamedel"></form>`);
+    $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" value = " " id="lastnamedel"></form>`);
+});
+
+document.getElementById('deletecontact').addEventListener('click', function(event){
+    const firstname = document.getElementById('firstnamedel').value;
+    console.log(firstname);
+    let lastname = document.getElementById('lastnamedel').value;
+    console.log(lastname);
+    const confirm = document.getElementById('deleteconfirm').value;
+    $('viewpage').empty();
+    for (let i = 0; i < employeeList.length; i++){
+        if ((firstname === employeeList[i].fName) && (lastname === employeeList[i].lName)){
+            $().card();
+            $('#fName').append(employeeList[i], 'fName');
+            $('#lName').append(employeeList[i], 'lName');
+            $('#officeNum').append(employeeList[i], 'officeNum');
+            $('#phoneNum').append(employeeList[i], 'phoneNum');
+            confirm.classList.remove('d-none');
+            confirm.classList.add('d-inline');
+        } else {
+            alert('Your search did not yield any results!');
+            $('viewpage').empty();
+            $().card();
+            $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" value = " " id="firstnamedel"></form>`);
+    $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" value = " " id="lastnamedel"></form>`);
+        };
+    };
 });
