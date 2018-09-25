@@ -51,9 +51,6 @@ document.getElementById('add').addEventListener('click', function(event){
 /*Add user to employeeList form when clicking add.*/
 document.getElementById('addcontact').addEventListener('click', function(event){
     /*obtain elements to add and remove stylings */
-    const add = document.getElementById('addpage');
-    const addtab = document.getElementById('add');
-    const viewtab = document.getElementById('view');
     /*add the new contact to the object*/
     let firstname = $('#firstname').val();
     let lastname = $('#lastname').val();
@@ -74,7 +71,7 @@ document.getElementById('addcontact').addEventListener('click', function(event){
         return;
     } else if ($().isPhone(phonenumber) === false) {
         alert('You must enter a valid phone number');
-        console.log($().isPhone(phonenumber));
+        return;
     } else {
         employeeList.push({fName:firstname, lName:lastname, officeNum: officenumber, phoneNum:phonenumber});
         //sort the list again
@@ -167,8 +164,6 @@ document.getElementById('update').addEventListener('click', function(event){
     $().card();
     $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id="firstnameup">`);
     $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastnameup">`);
-    $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
-    $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
     updatepage.classList.remove('d-none');
     updatepage.classList.add('d-inline');
 });
@@ -180,8 +175,6 @@ document.getElementById('resetupdate').addEventListener('click', function(){
     $().card();
     $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnameup"></form>`);
     $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnameup"></form>`);
-    $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
-    $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
     confirm.classList.remove('d-inline');
     confirm.classList.add('d-none');
 });
@@ -189,8 +182,6 @@ document.getElementById('resetupdate').addEventListener('click', function(){
 document.getElementById('updatecontact').addEventListener('click', function(){
     let firstname = document.getElementById('firstnameup').value;
     let lastname = document.getElementById('lastnameup').value;
-    const officenum = document.getElementById('officenumberup').value;
-    const phonenum = document.getElementById('phonenumberup').value;
     const confirm = document.getElementById('updateconfirm');
     firstname = $().cap(firstname);
     lastname = $().cap(lastname);
@@ -201,6 +192,8 @@ document.getElementById('updatecontact').addEventListener('click', function(){
             location = i;
             confirm.classList.remove('d-none');
             confirm.classList.add('d-inline');
+            $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
+            $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
             counter++;
         };
     }; 
@@ -208,24 +201,42 @@ document.getElementById('updatecontact').addEventListener('click', function(){
     alert(firstname + " " + lastname + " does not exist!");
     };
     document.getElementById('updateconfirm').addEventListener('click', function(event){
-        alert("You have successfully updated " + firstname + " " + lastname);
-        employeeList.splice(location, 1, {
-            fName: firstname,
-            lName: lastname,
-            officeNum: phonenum,
-            phoneNum: officenum
-        });
-        employeeList.sort(function(a, b){
-            return a.lName > b.lName;
-        });
-        $('viewpage').empty();
-        $().card();
-        $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnameup"></form>`);
-        $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnameup"></form>`);
-        $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
-        $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
-        confirm.classList.remove('d-inline');
-        confirm.classList.add('d-none');
+        let officenum = document.getElementById('officenumberup').value;
+        officenum = ('000' + officenum).substr(-3);
+        const phonenum = document.getElementById('phonenumberup').value;
+        if ((firstname === "") || (firstname === " ")|| ($().isNumber(firstname) === true)){
+            alert('You must enter a valid first name!');
+            return;
+        } else if ((lastname === "") || (lastname === " ") || ($().isNumber(lastname) === true)) {
+            alert('You must enter a valid last name!');
+            return;
+        } else if (officenum === "000"){
+            console.log(officenum);
+            alert('You must enter a valid office number!');
+            return;
+        } else if ($().isPhone(phonenum) === false) {
+            alert('You must enter a valid phone number');
+            return;
+        } else {
+            alert("You have successfully updated " + firstname + " " + lastname);
+            employeeList.splice(location, 1, {
+                fName: firstname,
+                lName: lastname,
+                officeNum: officenum,
+                phoneNum: phonenum
+            });
+            employeeList.sort(function(a, b){
+                return a.lName > b.lName;
+            });
+            $('viewpage').empty();
+            $().card();
+            $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnameup"></form>`);
+            $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnameup"></form>`);
+            $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
+            $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
+            confirm.classList.remove('d-inline');
+            confirm.classList.add('d-none');
+        };
     });
 });
 
@@ -261,6 +272,7 @@ document.getElementById('resetdelete').addEventListener('click', function(event)
 
 document.getElementById('deletecontact').addEventListener('click', function(event){
     let firstname = document.getElementById('firstnamedel').value;
+    console.log(firstname);
     let lastname = document.getElementById('lastnamedel').value;
     const confirm = document.getElementById('deleteconfirm');
     firstname = $().cap(firstname);

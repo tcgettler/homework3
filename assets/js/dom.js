@@ -149,8 +149,7 @@ function isNumber(n) {
 
 function isPhone(input){
   const phone = /^\d{3}-\d{3}-\d{4}$/;
-  console.log(phone)
-  if (input.value.match(phone)){
+  if (input.match(phone)){
       return true;
     } else {
       return false;
