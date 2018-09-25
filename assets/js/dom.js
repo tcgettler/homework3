@@ -140,13 +140,15 @@ const menuchange = function(){
 //capitalize the first letter in string
 const cap = function (string){
   let phrase = string.toLowerCase();
-    return phrase.charAt(0).toUpperCase() + phrase.slice(1);
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 };
 
+//check if value passed is a number
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
+//check to see if value is in the format xxx-xxx-xxxx
 function isPhone(input){
   const phone = /^\d{3}-\d{3}-\d{4}$/;
   if (input.match(phone)){

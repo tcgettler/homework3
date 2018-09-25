@@ -58,7 +58,7 @@ Styling for the add contact form
 */
 #addpage{
     z-index: 2;
-    height: 35vh;
+    height: 37vh;
     background-color: white;
     border-style: solid;
     border-color: gray;
@@ -119,4 +119,10 @@ Styling for update page
 }
 #phonenumberup {
     margin-top:0%;
+}
+
+@media screen and (max-width: 768px) {
+    #addpage{
+        height:25vh;
+    }
 }

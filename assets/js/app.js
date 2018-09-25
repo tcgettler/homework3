@@ -56,10 +56,11 @@ document.getElementById('addcontact').addEventListener('click', function(event){
     let lastname = $('#lastname').val();
     firstname = $().cap(firstname);
     lastname = $().cap(lastname);
+    //set office number to 000 style
     let officenumber = $('#officenumber').val();
     officenumber = ('000' + officenumber).substr(-3);
-    console.log(officenumber);
     const phonenumber = $('#phonenumber').val();
+    //validate all input fields have a valid selection
     if ((firstname === "") || (firstname === " ")|| ($().isNumber(firstname) === true)){
         alert('You must enter a valid first name!');
         return;
@@ -72,6 +73,7 @@ document.getElementById('addcontact').addEventListener('click', function(event){
     } else if ($().isPhone(phonenumber) === false) {
         alert('You must enter a valid phone number');
         return;
+    //if validation is completed, add user to the list    
     } else {
         employeeList.push({fName:firstname, lName:lastname, officeNum: officenumber, phoneNum:phonenumber});
         //sort the list again
@@ -110,6 +112,7 @@ document.getElementById('cancelcontact').addEventListener('click', function(even
 /****************************************end of add tab *****************************************************/
 
 /****************************************Start of search tab ************************************************/
+//Allow the search bar to appear when option is clicked
 document.getElementById('search').addEventListener('click', function(event){
     const search = document.getElementById('searchpage');
     const clicked = document.getElementById('search');
@@ -124,20 +127,19 @@ document.getElementById('searchbutton').addEventListener('click', function(event
     const searchcriteria = $("#searchbar").val();
     const index = [];
     let counter = 0;
+    //check the array for the value searched
     for (i=0; i<employeeList.length; i++){
-        if (searchvalue === "officeNum"){
-            if (Number(searchcriteria) === employeeList[i][searchvalue]){
-                index.push(employeeList[i]);
-                counter++;
-            };
-        }else if (searchcriteria.toLowerCase() === employeeList[i][searchvalue].toLowerCase()){
+        //search the array for value searched
+        if (searchcriteria.toLowerCase() === employeeList[i][searchvalue].toLowerCase()){
                 index.push(employeeList[i]);
                 counter++;
         };
     };
+    //if nothing is found, alert user nothing found.
     if (counter===0){
         alert("Your search did not yield any results!");
     }
+    //display all entries found
     if (index.length > 0){
         $('viewpage').empty();
         $().card();
@@ -180,13 +182,16 @@ document.getElementById('resetupdate').addEventListener('click', function(){
 });
 
 document.getElementById('updatecontact').addEventListener('click', function(){
+    //obtain the first and last name values
     let firstname = document.getElementById('firstnameup').value;
     let lastname = document.getElementById('lastnameup').value;
     const confirm = document.getElementById('updateconfirm');
+    //capitalize first and last name
     firstname = $().cap(firstname);
     lastname = $().cap(lastname);
     let location = 0;
     let counter=0;
+    //search the entire array for entry.
     for (let i = 0; i < employeeList.length; i++){
         if (firstname === employeeList[i]['fName'] && lastname === employeeList[i]['lName']){
             location = i;
@@ -197,13 +202,18 @@ document.getElementById('updatecontact').addEventListener('click', function(){
             counter++;
         };
     }; 
+    //if no one is found, display error and exit function
     if(counter===0){
     alert(firstname + " " + lastname + " does not exist!");
+    return;
     };
+    //when confirm button is clicked, actually update the entry
     document.getElementById('updateconfirm').addEventListener('click', function(event){
+        //obtain office and phone number, making sure office number is in 000 format
         let officenum = document.getElementById('officenumberup').value;
         officenum = ('000' + officenum).substr(-3);
         const phonenum = document.getElementById('phonenumberup').value;
+        //check to validate all form entries are valid
         if ((firstname === "") || (firstname === " ")|| ($().isNumber(firstname) === true)){
             alert('You must enter a valid first name!');
             return;
@@ -217,23 +227,26 @@ document.getElementById('updatecontact').addEventListener('click', function(){
         } else if ($().isPhone(phonenum) === false) {
             alert('You must enter a valid phone number');
             return;
+        //if all inputs are valid, update entry
         } else {
+            //display alert letting user know person has been added
             alert("You have successfully updated " + firstname + " " + lastname);
+            //Update entry with new values.
             employeeList.splice(location, 1, {
                 fName: firstname,
                 lName: lastname,
                 officeNum: officenum,
                 phoneNum: phonenum
             });
+            //re-alphabatize array in case last name gets updated
             employeeList.sort(function(a, b){
                 return a.lName > b.lName;
             });
+            //reset the page
             $('viewpage').empty();
             $().card();
             $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnameup"></form>`);
             $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnameup"></form>`);
-            $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
-            $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
             confirm.classList.remove('d-inline');
             confirm.classList.add('d-none');
         };
@@ -271,14 +284,17 @@ document.getElementById('resetdelete').addEventListener('click', function(event)
 
 
 document.getElementById('deletecontact').addEventListener('click', function(event){
+    //obtain values for names
     let firstname = document.getElementById('firstnamedel').value;
     console.log(firstname);
     let lastname = document.getElementById('lastnamedel').value;
     const confirm = document.getElementById('deleteconfirm');
+    //capitalize first and last name
     firstname = $().cap(firstname);
     lastname = $().cap(lastname);
     let location = 0;
     let counter=0;
+    //check the array for names
     for (let i = 0; i < employeeList.length; i++){
         if (firstname === employeeList[i]['fName'] && lastname === employeeList[i]['lName']){
             $().card();
@@ -290,11 +306,12 @@ document.getElementById('deletecontact').addEventListener('click', function(even
             confirm.classList.remove('d-none');
             confirm.classList.add('d-inline');
             counter++;
-        } 
-        
+        };
     };
+    //if no entry found, alert user that they don't exist
     if(counter===0){
         alert(firstname + " " + lastname + " does not exist!");
+        return;
     };
     //actually delete the entry when user clicks confirm
     document.getElementById('deleteconfirm').addEventListener('click', function(event){
