@@ -44,11 +44,11 @@ const $ = function (selector) {
   }
 
   //adds html elements to the end of the nodeList.
-  const append = function(content,key){;
+  const append = function(content,key){
     for (let i = 0; i < nodeList.length; i++) {
       nodeList[i].innerHTML += content[i][key];
     }
-  }
+  };
 
   //adds html elements to the beginning of the nodelist.
   const prepend = function(content){
@@ -137,12 +137,32 @@ const menuchange = function(){
   deletepage.classList.add('d-none');
 };
 
-  //Event listener function to run actions created on pages.
-  const on = function (action, cb) {
-    for (let i = 0; i < nodeList.length; i++) {
-      nodeList[i].addEventListener(action, cb);
-    }
-  };
+//capitalize the first letter in string
+const cap = function (string){
+  let phrase = string.toLowerCase();
+    return phrase.charAt(0).toUpperCase() + phrase.slice(1);
+};
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+function isPhone(input){
+  const phone = /^\d{3}-\d{3}-\d{4}$/;
+  console.log(phone)
+  if (input.value.match(phone)){
+      return true;
+    } else {
+      return false;
+    };
+};
+
+//Event listener function to run actions created on pages.
+const on = function (action, cb) {
+  for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].addEventListener(action, cb);
+  }
+};
 
   return {
     text: text,
@@ -157,6 +177,9 @@ const menuchange = function(){
     val: val,
     duplicate: duplicate,
     card: card,
-    menuchange: menuchange
+    menuchange: menuchange,
+    cap: cap,
+    isNumber: isNumber,
+    isPhone: isPhone
   };
 }

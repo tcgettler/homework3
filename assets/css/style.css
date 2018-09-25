@@ -86,9 +86,6 @@ input{
     border-color:darkgray;
 }
 
-#updatepage{
-    
-}
 #searchbar{
     margin:0%;
 }
@@ -99,15 +96,17 @@ input{
     margin-left: 4%;
 }
 
-.buttongroup{
-    
-    
-}
-
 .inputstyle{
     margin:0;
 }
 
 .mainpage{
     padding-top:5vh;
+}
+
+#officenumberup{
+    margin-top:0%;
+}
+#phonenumberup {
+    margin-top:0%;
 }

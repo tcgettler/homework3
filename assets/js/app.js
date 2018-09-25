@@ -1,7 +1,7 @@
 /*
 Render view list upon page load
-*******************************
-*******************************
+****************************************
+****************************************
 */
 window.addEventListener('load',function(event){
     $().card();
@@ -23,7 +23,9 @@ document.getElementById('view').addEventListener('click', function(event){
     const view = document.getElementById('view');
     $().menuchange();
     view.classList.add('active');
-
+    employeeList.sort(function(a, b){
+        return a.lName > b.lName;
+    });
     $('viewpage').empty();
     $().card();
         for (i=1; i < employeeList.length; i++){
@@ -52,31 +54,49 @@ document.getElementById('addcontact').addEventListener('click', function(event){
     const add = document.getElementById('addpage');
     const addtab = document.getElementById('add');
     const viewtab = document.getElementById('view');
-
     /*add the new contact to the object*/
-    const firstname = $('#firstname').val();
-    const lastname = $('#lastname').val();
-    const officenumber = $('#officenumber').val();
+    let firstname = $('#firstname').val();
+    let lastname = $('#lastname').val();
+    firstname = $().cap(firstname);
+    lastname = $().cap(lastname);
+    let officenumber = $('#officenumber').val();
+    officenumber = ('000' + officenumber).substr(-3);
+    console.log(officenumber);
     const phonenumber = $('#phonenumber').val();
-    employeeList.push({fName:firstname, lName:lastname, officeNum: officenumber, phoneNum:phonenumber});
-   
-    /*empty the current list of ids content*/
-    $('#fName').empty();
-    $('#lName').empty();
-    $('#officeNum').empty();
-    $('#phoneNum').empty();
-    /*add another card to the list*/
-    $().duplicate();
-    /*repopulate all the cards with the new person added at the end*/
-    $('#fName').append(employeeList, 'fName');
-    $('#lName').append(employeeList, 'lName');
-    $('#officeNum').append(employeeList, 'officeNum');
-    $('#phoneNum').append(employeeList, 'phoneNum');
-    /*reset the form and make it disappear*/
-    document.getElementById("addform").reset();
-    add.classList.add('invisible');
-    addtab.classList.remove('active');
-    viewtab.classList.add('active');
+    if ((firstname === "") || (firstname === " ")|| ($().isNumber(firstname) === true)){
+        alert('You must enter a valid first name!');
+        return;
+    } else if ((lastname === "") || (lastname === " ") || ($().isNumber(lastname) === true)) {
+        alert('You must enter a valid last name!');
+        return;
+    } else if (officenumber === "000"){
+        alert('You must enter a valid office number!');
+        return;
+    } else if ($().isPhone(phonenumber) === false) {
+        alert('You must enter a valid phone number');
+        console.log($().isPhone(phonenumber));
+    } else {
+        employeeList.push({fName:firstname, lName:lastname, officeNum: officenumber, phoneNum:phonenumber});
+        //sort the list again
+        employeeList.sort(function(a, b){
+            return a.lName > b.lName;
+        });
+        /*empty the current list of ids content*/
+        $('#fName').empty();
+        $('#lName').empty();
+        $('#officeNum').empty();
+        $('#phoneNum').empty();
+        /*add another card to the list*/
+        $().duplicate();
+        /*repopulate all the cards with the new person added at the end*/
+        $('#fName').append(employeeList, 'fName');
+        $('#lName').append(employeeList, 'lName');
+        $('#officeNum').append(employeeList, 'officeNum');
+        $('#phoneNum').append(employeeList, 'phoneNum');
+        /*reset the form in case user wants to make another entry*/
+        alert("You have successfully added " + firstname + " " + lastname + " to the registry! Select the view tab to view new entry!")
+        document.getElementById("addform").reset();
+    };
 });
 
 /*Reset the form when clicking reset*/
@@ -106,17 +126,21 @@ document.getElementById('searchbutton').addEventListener('click', function(event
     const searchvalue = $(".custom-select").val();
     const searchcriteria = $("#searchbar").val();
     const index = [];
+    let counter = 0;
     for (i=0; i<employeeList.length; i++){
         if (searchvalue === "officeNum"){
             if (Number(searchcriteria) === employeeList[i][searchvalue]){
                 index.push(employeeList[i]);
+                counter++;
             };
         }else if (searchcriteria.toLowerCase() === employeeList[i][searchvalue].toLowerCase()){
                 index.push(employeeList[i]);
-        } else {
-            
+                counter++;
         };
     };
+    if (counter===0){
+        alert("Your search did not yield any results!");
+    }
     if (index.length > 0){
         $('viewpage').empty();
         $().card();
@@ -141,17 +165,68 @@ document.getElementById('update').addEventListener('click', function(event){
     update.classList.add('active');
     $('viewpage').empty();
     $().card();
-    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id="firstname">`);
-    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastname">`);
-    $('#officeNum').html(`<input type="text" class="form-control inputstyle" placeholder="Office Number" id="officenumber">`);
-    $('#phoneNum').html(`<input type="text" class="form-control inputstyle" placeholder="Phone Number" id="phonenumber">`);
+    $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id="firstnameup">`);
+    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastnameup">`);
+    $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
+    $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
     updatepage.classList.remove('d-none');
     updatepage.classList.add('d-inline');
 });
 
 document.getElementById('resetupdate').addEventListener('click', function(){
+    //Can't get input fields to reset, so I just delete the form and rebuild it.
+    const confirm = document.getElementById('updateconfirm');
+    $('viewpage').empty();
+    $().card();
+    $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnameup"></form>`);
+    $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnameup"></form>`);
+    $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
+    $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
+    confirm.classList.remove('d-inline');
+    confirm.classList.add('d-none');
+});
 
-
+document.getElementById('updatecontact').addEventListener('click', function(){
+    let firstname = document.getElementById('firstnameup').value;
+    let lastname = document.getElementById('lastnameup').value;
+    const officenum = document.getElementById('officenumberup').value;
+    const phonenum = document.getElementById('phonenumberup').value;
+    const confirm = document.getElementById('updateconfirm');
+    firstname = $().cap(firstname);
+    lastname = $().cap(lastname);
+    let location = 0;
+    let counter=0;
+    for (let i = 0; i < employeeList.length; i++){
+        if (firstname === employeeList[i]['fName'] && lastname === employeeList[i]['lName']){
+            location = i;
+            confirm.classList.remove('d-none');
+            confirm.classList.add('d-inline');
+            counter++;
+        };
+    }; 
+    if(counter===0){
+    alert(firstname + " " + lastname + " does not exist!");
+    };
+    document.getElementById('updateconfirm').addEventListener('click', function(event){
+        alert("You have successfully updated " + firstname + " " + lastname);
+        employeeList.splice(location, 1, {
+            fName: firstname,
+            lName: lastname,
+            officeNum: phonenum,
+            phoneNum: officenum
+        });
+        employeeList.sort(function(a, b){
+            return a.lName > b.lName;
+        });
+        $('viewpage').empty();
+        $().card();
+        $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnameup"></form>`);
+        $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnameup"></form>`);
+        $('#officeNum').html(`<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" class="form-control" placeholder="Office number" id="officenumberup" type = "number" maxlength = "3" required/>`);
+        $('#phoneNum').html(`<input type="tel" class="form-control" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" required id="phonenumberup"/>`);
+        confirm.classList.remove('d-inline');
+        confirm.classList.add('d-none');
+    });
 });
 
 /****************************************************End of Update Tab *****************************************************************************/
@@ -166,7 +241,7 @@ document.getElementById('delete').addEventListener('click', function(event){
     $('viewpage').empty();
     $().card();
     $('#fName').html(`<input type="text" class="form-control" placeholder="First Name" id="firstnamedel">`);
-    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastname2">`);
+    $('#lName').html(`<input type="text" class="form-control" placeholder="Last Name" id="lastnamedel">`);
     deletepage.classList.remove('d-none');
     deletepage.classList.add('d-inline');
 });
@@ -174,34 +249,49 @@ document.getElementById('delete').addEventListener('click', function(event){
 /*Reset the form when clicking reset*/
 document.getElementById('resetdelete').addEventListener('click', function(event){
     //Can't get input fields to reset, so I just delete the form and rebuild it.
+    const confirm = document.getElementById('deleteconfirm');
     $('viewpage').empty();
     $().card();
-    $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" value = " " id="firstnamedel"></form>`);
-    $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" value = " " id="lastnamedel"></form>`);
+    $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" id="firstnamedel"></form>`);
+    $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnamedel"></form>`);
+    confirm.classList.remove('d-inline');
+    confirm.classList.add('d-none');
 });
 
+
 document.getElementById('deletecontact').addEventListener('click', function(event){
-    const firstname = document.getElementById('firstnamedel').value;
-    console.log(firstname);
+    let firstname = document.getElementById('firstnamedel').value;
     let lastname = document.getElementById('lastnamedel').value;
-    console.log(lastname);
-    const confirm = document.getElementById('deleteconfirm').value;
-    $('viewpage').empty();
+    const confirm = document.getElementById('deleteconfirm');
+    firstname = $().cap(firstname);
+    lastname = $().cap(lastname);
+    let location = 0;
+    let counter=0;
     for (let i = 0; i < employeeList.length; i++){
-        if ((firstname === employeeList[i].fName) && (lastname === employeeList[i].lName)){
+        if (firstname === employeeList[i]['fName'] && lastname === employeeList[i]['lName']){
             $().card();
-            $('#fName').append(employeeList[i], 'fName');
-            $('#lName').append(employeeList[i], 'lName');
-            $('#officeNum').append(employeeList[i], 'officeNum');
-            $('#phoneNum').append(employeeList[i], 'phoneNum');
+            location = i;
+            $('#fName').html(`<p>${employeeList[i]['fName']}</p>`);
+            $('#lName').html(`<p>${employeeList[i]['lName']}</p>`);
+            $('#officeNum').html(`<p>${employeeList[i]['officeNum']}</p>`);
+            $('#phoneNum').html(`<p>${employeeList[i]['phoneNum']}</p>`);
             confirm.classList.remove('d-none');
             confirm.classList.add('d-inline');
-        } else {
-            alert('Your search did not yield any results!');
-            $('viewpage').empty();
-            $().card();
-            $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name" value = " " id="firstnamedel"></form>`);
-    $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" value = " " id="lastnamedel"></form>`);
-        };
+            counter++;
+        } 
+        
     };
+    if(counter===0){
+        alert(firstname + " " + lastname + " does not exist!");
+    };
+    //actually delete the entry when user clicks confirm
+    document.getElementById('deleteconfirm').addEventListener('click', function(event){
+        employeeList.splice(location,1);
+        alert("You have successfully deleted " + firstname + " " + lastname);
+        $('viewpage').empty();
+        $().card();
+        $('#fName').html(`<form><input type="text" class="form-control" placeholder="First Name"  id="firstnamedel"></form>`);
+        $('#lName').html(`<form><input type="text" class="form-control" placeholder="Last Name" id="lastnamedel"></form>`);
+    });
 });
+

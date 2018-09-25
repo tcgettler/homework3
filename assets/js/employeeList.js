@@ -2,7 +2,7 @@
 const employeeList = [{
   fName: 'Jan',
   lName: 'Boering',
-  officeNum: 1,
+  officeNum: 001,
   phoneNum: '222-222-2222'
 },
 {
@@ -20,13 +20,13 @@ const employeeList = [{
 {
   fName: 'Sara',
   lName: 'Guidotti',
-  officeNum: 32,
+  officeNum: 032,
   phoneNum: '222-789-4654'
 },
 {
   fName: 'Tyrell',
   lName: 'Caulfield',
-  officeNum: 3,
+  officeNum: 003,
   phoneNum: '566-621-0452'
 },
 {
@@ -48,3 +48,7 @@ const employeeList = [{
   phoneNum: '222-789-5231'
 }
 ];
+
+employeeList.sort(function(a, b){
+  return a.lName > b.lName;
+});
